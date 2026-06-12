@@ -16,14 +16,12 @@ public class Message {
     // LOGIN CLASS //
     static class Login {
 
-        // USER DETAILS //
         private String firstName;
         private String lastName;
         private String username;
         private String password;
         private String cellPhoneNumber;
-
-        // CONSTRUCTOR //
+        
         public Login(String firstName, String lastName, String username, String password, String cellPhoneNumber) {
             this.firstName = firstName;
             this.lastName = lastName;
@@ -31,13 +29,10 @@ public class Message {
             this.password = password;
             this.cellPhoneNumber = cellPhoneNumber;
         }
-
-        // USERNAME CHECK //
         public boolean checkUserName() {
             return username.contains("_") && username.length() <= 5;
         }
 
-        // PASSWORD COMPLEXITY CHECK //
         public boolean checkPasswordComplexity() {
             if (password.length() < 8) return false;
             boolean hasCapital = false, hasNumber = false, hasSpecial = false;
@@ -49,18 +44,15 @@ public class Message {
             return hasCapital && hasNumber && hasSpecial;
         }
 
-        // CELL NUMBER CHECK //
         // Regex sourced and adapted from: https://www.baeldung.com/java-regex-validate-phone-numbers
         public boolean checkCellPhoneNumber() {
             return cellPhoneNumber.matches("^\\+27\\d{9}$");
         }
 
-        // LOGIN CHECK //
         public boolean loginUser(String enteredUsername, String enteredPassword) {
             return this.username.equals(enteredUsername) && this.password.equals(enteredPassword);
         }
 
-        // LOGIN STATUS MESSAGE //
         public String returnLoginStatus(String enteredUsername, String enteredPassword) {
             if (loginUser(enteredUsername, enteredPassword)) {
                 return "Welcome " + firstName + " " + lastName + ", it is great to see you again!";
@@ -69,15 +61,12 @@ public class Message {
             }
         }
 
-        // GETTERS //
         public String getFirstName() { return firstName; }
         public String getLastName() { return lastName; }
     }
 
-    // MESSAGE DATA CLASS //
     static class MessageData {
-
-        // MESSAGE FIELDS //
+        
         private String messageID;
         private int messageNumber;
         private String recipient;
@@ -85,7 +74,6 @@ public class Message {
         private String messageHash;
         private String flag;
 
-        // SHARED ARRAYS - FILLED BY USER ACTIONS, NOT HARD-CODED //
         static int totalSent = 0;
         static ArrayList<MessageData> sentMessages      = new ArrayList<>();
         static ArrayList<MessageData> storedMessages    = new ArrayList<>();
@@ -93,7 +81,6 @@ public class Message {
         static ArrayList<String>      messageHashes     = new ArrayList<>();
         static ArrayList<String>      messageIDs        = new ArrayList<>();
 
-        // CONSTRUCTOR - USED WHEN CREATING A NEW MESSAGE //
         public MessageData(int messageNumber, String recipient, String messageText) {
             this.messageNumber = messageNumber;
             this.recipient     = recipient;
@@ -113,7 +100,6 @@ public class Message {
             this.messageNumber = messageNumber;
         }
 
-        // GENERATE RANDOM 10-DIGIT MESSAGE ID //
         private String generateMessageID() {
             Random rand = new Random();
             long id = (long)(rand.nextDouble() * 9_000_000_000L) + 1_000_000_000L;
