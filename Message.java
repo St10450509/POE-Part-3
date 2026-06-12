@@ -241,11 +241,9 @@ public class Message {
                 }
                 System.out.println("Stored messages loaded from " + filename);
             } catch (Exception e) {
-                // NO FILE YET - NORMAL ON FIRST RUN //
             }
         }
 
-        // EXTRACT A VALUE FROM A JSON STRING BY KEY //
         private static String extractJsonValue(String obj, String key) {
             String search  = "\"" + key + "\"";
             int idx        = obj.indexOf(search);
@@ -258,7 +256,6 @@ public class Message {
             return obj.substring(startQuote + 1, endQuote);
         }
 
-        // a. DISPLAY RECIPIENT AND MESSAGE FOR ALL STORED MESSAGES //
         public static String displayStoredSenderRecipient() {
             if (storedMessages.isEmpty()) return "No stored messages.";
             StringBuilder sb = new StringBuilder();
@@ -269,7 +266,7 @@ public class Message {
             return sb.toString().trim();
         }
 
-        // b. FIND AND RETURN THE LONGEST MESSAGE ACROSS SENT AND STORED //
+        // b. FIND AND RETURN THE LONGEST MESSAGE ACROSS SENT AND STORED
         public static String getLongestMessage() {
             ArrayList<MessageData> all = new ArrayList<>();
             all.addAll(sentMessages);
@@ -284,7 +281,7 @@ public class Message {
             return longest.messageText;
         }
 
-        // c. SEARCH BY MESSAGE ID AND RETURN RECIPIENT AND MESSAGE //
+        // c. SEARCH BY MESSAGE ID AND RETURN RECIPIENT AND MESSAGE
         public static String searchByMessageID(String id) {
             for (MessageData m : sentMessages) {
                 if (m.messageID.equals(id)) {
@@ -299,7 +296,7 @@ public class Message {
             return "Message ID not found.";
         }
 
-        // d. SEARCH ALL MESSAGES FOR A SPECIFIC RECIPIENT //
+        // d. SEARCH ALL MESSAGES FOR A SPECIFIC RECIPIENT
         public static String searchByRecipient(String recipient) {
             StringBuilder sb = new StringBuilder();
             for (MessageData m : sentMessages) {
@@ -311,7 +308,7 @@ public class Message {
             return sb.length() > 0 ? sb.toString().trim() : "No messages found for this recipient.";
         }
 
-        // e. DELETE A MESSAGE BY ITS HASH //
+        // e. DELETE A MESSAGE BY ITS HASH
         public static String deleteByHash(String hash) {
             Iterator<MessageData> it = storedMessages.iterator();
             while (it.hasNext()) {
@@ -336,7 +333,7 @@ public class Message {
             return "Message hash not found.";
         }
 
-        // f. DISPLAY FULL REPORT OF ALL SENT AND STORED MESSAGES //
+        // f. DISPLAY FULL REPORT OF ALL SENT AND STORED MESSAGES
         public static String displayReport() {
             ArrayList<MessageData> all = new ArrayList<>();
             all.addAll(sentMessages);
@@ -352,7 +349,6 @@ public class Message {
             return sb.toString().trim();
         }
 
-        // GETTERS //
         public String getMessageID()   { return messageID; }
         public String getRecipient()   { return recipient; }
         public String getMessageText() { return messageText; }
@@ -360,46 +356,46 @@ public class Message {
         public String getFlag()        { return flag; }
     }
 
-    // STORED MESSAGES SUB-MENU //
+    // STORED MESSAGES SUB-MENU 
     private static void storedMessagesMenu(Scanner scanner) {
         boolean inMenu = true;
         while (inMenu) {
             System.out.println("\nSTORED MESSAGES");
-            System.out.println("a) Display sender and recipient of all stored messages");
-            System.out.println("b) Display the longest message");
-            System.out.println("c) Search for a message by ID");
-            System.out.println("d) Search messages by recipient");
-            System.out.println("e) Delete a message by hash");
-            System.out.println("f) Display full report");
-            System.out.println("x) Back to main menu");
+            System.out.println("1) Display sender and recipient of all stored messages");
+            System.out.println("2) Display the longest message");
+            System.out.println("3) Search for a message by ID");
+            System.out.println("4) Search messages by recipient");
+            System.out.println("5) Delete a message by hash");
+            System.out.println("6) Display full report");
+            System.out.println("7) Back to main menu");
             System.out.print("Choose option: ");
             String opt = scanner.nextLine().trim().toLowerCase();
             switch (opt) {
-                case "a":
+                case "1":
                     System.out.println(MessageData.displayStoredSenderRecipient());
                     break;
-                case "b":
+                case "2":
                     System.out.println(MessageData.getLongestMessage());
                     break;
-                case "c":
+                case "3":
                     System.out.print("Enter Message ID: ");
                     String id = scanner.nextLine().trim();
                     System.out.println(MessageData.searchByMessageID(id));
                     break;
-                case "d":
+                case "4":
                     System.out.print("Enter recipient number: ");
                     String rec = scanner.nextLine().trim();
                     System.out.println(MessageData.searchByRecipient(rec));
                     break;
-                case "e":
+                case "5":
                     System.out.print("Enter message hash: ");
                     String hash = scanner.nextLine().trim();
                     System.out.println(MessageData.deleteByHash(hash));
                     break;
-                case "f":
+                case "6":
                     System.out.println(MessageData.displayReport());
                     break;
-                case "x":
+                case "7":
                     inMenu = false;
                     break;
                 default:
@@ -411,13 +407,11 @@ public class Message {
     // MAIN //
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
-        // LOAD STORED MESSAGES FROM PREVIOUS SESSION //
         MessageData.loadStoredMessages("stored_messages.json");
 
         Login user = null;
 
-        // WELCOME / REGISTER / LOGIN SCREEN //
+        // WELCOME
         boolean welcomed = true;
         while (welcomed) {
             System.out.println("\n WELCOME TO QUICKCHAT ");
@@ -440,7 +434,7 @@ public class Message {
                     System.out.print("Last Name: ");
                     String regLast = scanner.nextLine();
 
-                    // CAPTURE USERNAME //
+                    // CAPTURE USERNAME
                     String regUsername;
                     while (true) {
                         System.out.print("Username: ");
@@ -454,7 +448,7 @@ public class Message {
                         }
                     }
 
-                    // CAPTURE PASSWORD //
+                    // CAPTURE PASSWORD 
                     String regPassword;
                     while (true) {
                         System.out.print("Password: ");
@@ -468,7 +462,7 @@ public class Message {
                         }
                     }
 
-                    // CAPTURE CELL NUMBER //
+                    // CAPTURE CELL NUMBER
                     String regCell;
                     while (true) {
                         System.out.print("Cell number (+27): ");
@@ -482,13 +476,13 @@ public class Message {
                         }
                     }
 
-                    // SAVE NEW USER //
+                    // SAVE NEW USER 
                     user = new Login(regFirst, regLast, regUsername, regPassword, regCell);
                     System.out.println("Registration successful! You can now log in.");
                     break;
 
                 case 2:
-                    // BLOCK LOGIN IF NO USER IS REGISTERED YET //
+                    // BLOCK LOGIN IF NO USER IS REGISTERED YET 
                     if (user == null) {
                         System.out.println("No user registered. Please register first.");
                         break;
@@ -500,7 +494,7 @@ public class Message {
                     String enteredPassword = scanner.nextLine();
                     System.out.println(user.returnLoginStatus(enteredUsername, enteredPassword));
 
-                    // EXIT WELCOME LOOP ON SUCCESSFUL LOGIN //
+                    // EXIT WELCOME LOOP ON SUCCESSFUL LOGIN
                     if (user.loginUser(enteredUsername, enteredPassword)) {
                         welcomed = false;
                     }
@@ -516,7 +510,7 @@ public class Message {
             }
         }
 
-        // ASK HOW MANY MESSAGES TO SEND THIS SESSION //
+        // ASK HOW MANY MESSAGES TO SEND THIS SESSION
         System.out.print("\nHow many messages would you like to send? ");
         int numMessages = 0;
         try {
@@ -527,7 +521,7 @@ public class Message {
             return;
         }
 
-        // MAIN MENU LOOP //
+        // MAIN MENU LOOP
         boolean running = true;
         while (running) {
             System.out.println("\n WELCOME TO QUICKCHAT");
@@ -545,13 +539,13 @@ public class Message {
             }
             switch (choice) {
                 case 1:
-                    // LOOP THROUGH EACH MESSAGE SLOT //
+                    // LOOP THROUGH EACH MESSAGE SLOT
                     for (int i = 1; i <= numMessages; i++) {
                         System.out.println("\n--- Message " + i + " of " + numMessages + " ---");
                         System.out.print("Recipient cell (+27...): ");
                         String recipient = scanner.nextLine().trim();
 
-                        // KEEP ASKING UNTIL MESSAGE IS WITHIN 250 CHARACTERS //
+                        // KEEP ASKING UNTIL MESSAGE IS WITHIN 250 CHARACTERS
                         String messageText;
                         while (true) {
                             System.out.print("Message: ");
@@ -565,13 +559,13 @@ public class Message {
                             }
                         }
 
-                        // CREATE MESSAGE OBJECT - ID AND HASH ARE AUTO-GENERATED //
+                        // CREATE MESSAGE OBJECT - ID AND HASH ARE AUTO-GENERATED
                         MessageData msg = new MessageData(i, recipient, messageText);
                         System.out.println(msg.checkRecipientCell());
                         System.out.println("Message ID generated: " + msg.getMessageID());
                         System.out.println("Message Hash: " + msg.getMessageHash());
 
-                        // ASK USER WHAT TO DO WITH THE MESSAGE //
+                        // ASK USER WHAT TO DO WITH THE MESSAGE
                         System.out.println("\n1) Send Message");
                         System.out.println("2) Disregard Message");
                         System.out.println("3) Store Message to send later");
@@ -584,7 +578,7 @@ public class Message {
                         }
                         System.out.println(msg.sentMessage(sendChoice));
 
-                        // DISPLAY MESSAGE DETAILS //
+                        // DISPLAY MESSAGE DETAILS
                         System.out.println("\n Message Details ");
                         System.out.println("Message ID  : " + msg.getMessageID());
                         System.out.println("Message Hash: " + msg.getMessageHash());
@@ -593,7 +587,7 @@ public class Message {
                     }
                     System.out.println("\nTotal messages sent: " + MessageData.returnTotalMessages());
 
-                    // SAVE STORED MESSAGES TO JSON //
+                    // SAVE STORED MESSAGES TO JSON
                     if (!MessageData.storedMessages.isEmpty()) {
                         MessageData.storeMessage("stored_messages.json");
                     }
