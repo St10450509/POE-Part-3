@@ -102,7 +102,7 @@ public class Message {
             this.messageHash   = createMessageHash();
         }
 
-        // CONSTRUCTOR - USED ONLY WHEN LOADING FROM JSON //
+        // CONSTRUCTOR - USED ONLY WHEN LOADING FROM JSON 
         private MessageData(String messageID, String recipient, String messageText,
                             String messageHash, String flag, int messageNumber) {
             this.messageID     = messageID;
@@ -120,12 +120,12 @@ public class Message {
             return String.valueOf(id);
         }
 
-        // MESSAGE ID LENGTH CHECK //
+        // MESSAGE ID LENGTH CHECK 
         public boolean checkMessageID() {
             return messageID.length() <= 10;
         }
 
-        // RECIPIENT CELL NUMBER CHECK //
+        // RECIPIENT CELL NUMBER CHECK 
         public String checkRecipientCell() {
             if (recipient.startsWith("+") && recipient.length() <= 13) {
                 return "Cell phone number successfully captured.";
@@ -134,7 +134,7 @@ public class Message {
             }
         }
 
-        // BUILD MESSAGE HASH FROM ID PREFIX, MESSAGE NUMBER, FIRST AND LAST WORD //
+        // BUILD MESSAGE HASH FROM ID PREFIX, MESSAGE NUMBER, FIRST AND LAST WORD 
         public String createMessageHash() {
             String[] words   = messageText.trim().split("\\s+");
             String firstWord = words[0];
@@ -143,7 +143,7 @@ public class Message {
             return (idPrefix + ":" + messageNumber + ":" + firstWord + lastWord).toUpperCase();
         }
 
-        // MESSAGE LENGTH CHECK - MAX 250 CHARACTERS //
+        // MESSAGE LENGTH CHECK - MAX 250 CHARACTERS 
         public String checkMessageLength() {
             if (messageText.length() <= 250) {
                 return "Message ready to send.";
@@ -153,7 +153,7 @@ public class Message {
             }
         }
 
-        // SEND, DISREGARD, OR STORE THE MESSAGE //
+        // SEND, DISREGARD, OR STORE THE MESSAGE 
         public String sentMessage(int choice) {
             switch (choice) {
                 case 1:
@@ -178,7 +178,7 @@ public class Message {
             }
         }
 
-        // PRINT ALL SENT MESSAGES //
+        // PRINT ALL SENT MESSAGES 
         public static String printMessages() {
             if (sentMessages.isEmpty()) return "No messages sent.";
             StringBuilder sb = new StringBuilder();
@@ -192,13 +192,13 @@ public class Message {
             return sb.toString();
         }
 
-        // RETURN TOTAL MESSAGES SENT //
+        // RETURN TOTAL MESSAGES SENT
         public static int returnTotalMessages() {
             return totalSent;
         }
 
-        // SAVE STORED MESSAGES TO JSON FILE //
-        // File writing adapted from: https://www.baeldung.com/java-write-to-file
+        // SAVE STORED MESSAGES TO JSON FILE 
+        
         public static void storeMessage(String filename) {
             StringBuilder json = new StringBuilder();
             json.append("[\n");
@@ -223,8 +223,8 @@ public class Message {
             }
         }
 
-        // LOAD STORED MESSAGES FROM JSON AT SESSION START //
-        // JSON reading adapted from: https://www.baeldung.com/java-read-file
+        // LOAD STORED MESSAGES FROM JSON AT SESSION START
+        
         public static void loadStoredMessages(String filename) {
             try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
                 StringBuilder content = new StringBuilder();
@@ -235,11 +235,10 @@ public class Message {
                 String json = content.toString().trim();
                 if (json.length() < 2) return;
 
-                // STRIP OUTER BRACKETS //
+                // STRIP OUTER BRACKETS 
                 json = json.substring(1, json.length() - 1).trim();
                 if (json.isEmpty()) return;
 
-                // SPLIT INTO INDIVIDUAL OBJECTS AND READ EACH ONE //
                 String[] objects = json.split("\\},\\s*\\{");
                 int count = storedMessages.size() + 1;
                 for (String obj : objects) {
